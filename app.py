@@ -29,7 +29,8 @@ def load_model():
     """Load the trained model"""
     try:
         # Try different loading methods
-        model = tf.keras.models.load_model('diabetic_retinopathy_model.keras', compile=False)
+        # Load the compatible model
+        model = tf.keras.models.load_model('dr_model_compatible.h5')
         return model
     except Exception as e:
         st.error(f"Error loading model: {str(e)}")
