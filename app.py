@@ -143,7 +143,7 @@ def main():
                     
                     # Generate prediction
                     # Use actual model prediction
-                    result = predict_with_model(image)
+                    result = simulate_prediction(image)
                     
                     # Store in session state
                     st.session_state.prediction_result = result
