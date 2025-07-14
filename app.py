@@ -2,7 +2,8 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
-import io
+import gdown
+import os
 
 # Page config
 st.set_page_config(
@@ -25,30 +26,24 @@ CLASS_LABELS = {
 }
 
 @st.cache_resource
-def load_model():
-    """Load the trained model"""
+def download_and_load_model():
+    """Download weights and load model"""
     try:
-        # Try different loading methods
-        import gdown
-        import os
-        
-        # Only download if file doesn't exist
+        # Download weights if not exists
         if not os.path.exists('dr_model.weights.h5'):
             file_id = "13rrhte8UAxSlOyEj8ae74n0LrrzeYaUJ"
             url = f"https://drive.google.com/uc?id={file_id}"
-            with st.spinner("Downloading model weights..."):
-                gdown.download(url, 'dr_model.weights.h5', quiet=False)
+            st.info("Downloading model weights... This may take a moment.")
+            gdown.download(url, 'dr_model.weights.h5', quiet=False)
         
-        # Rebuild the model architecture
-        base_model = tf.keras.applications.EfficientNetB3(
-            weights='imagenet',
-            include_top=False,
-            input_shape=(224, 224, 3)
-        )
-        
-        # Add custom layers
+        # Create model with exact architecture
         model = tf.keras.Sequential([
-            base_model,
+            tf.keras.layers.Input(shape=(224, 224, 3)),
+            tf.keras.applications.EfficientNetB3(
+                include_top=False,
+                weights=None,
+                input_shape=(224, 224, 3)
+            ),
             tf.keras.layers.GlobalAveragePooling2D(),
             tf.keras.layers.Dropout(0.2),
             tf.keras.layers.Dense(128, activation='relu'),
@@ -56,22 +51,14 @@ def load_model():
             tf.keras.layers.Dense(5, activation='softmax')
         ])
         
-        # Load the saved weights
+        # Load weights
         model.load_weights('dr_model.weights.h5')
         
         return model
-        return model
+        
     except Exception as e:
-        st.error(f"Error loading model: {str(e)}")
-        try:
-            # Alternative loading method
-            model = tf.keras.models.load_model('diabetic_retinopathy_model.keras', 
-                                             custom_objects=None, compile=False)
-            st.warning("Loaded model without compilation")
-            return model
-        except Exception as e2:
-            st.error(f"Second attempt failed: {str(e2)}")
-            return None
+        st.error(f"Error: {str(e)}")
+        return None
 
 def preprocess_image(image):
     """Preprocess image for model prediction"""
@@ -94,7 +81,7 @@ def preprocess_image(image):
 def predict_image(model, image):
     """Make prediction on preprocessed image"""
     try:
-        prediction = model.predict(image)
+        prediction = model.predict(image, verbose=0)
         predicted_class = np.argmax(prediction[0])
         confidence = np.max(prediction[0])
         
@@ -104,7 +91,7 @@ def predict_image(model, image):
         return None, None, None
 
 # Load model
-model = load_model()
+model = download_and_load_model()
 
 if model is not None:
     st.success("✅ Model loaded successfully!")
@@ -176,5 +163,4 @@ if model is not None:
         """)
         
 else:
-    st.error("❌ Failed to load model. Make sure 'diabetic_retinopathy_model.keras' is in the same directory.")
-    st.info("Place your model file in the same folder as this Streamlit app.")
+    st.error("❌ Failed to load model. Please refresh the page to try again.")
