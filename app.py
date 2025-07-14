@@ -29,8 +29,37 @@ def load_model():
     """Load the trained model"""
     try:
         # Try different loading methods
-        # Load the compatible model
-        model = tf.keras.models.load_model('dr_model_compatible.h5')
+        import gdown
+        import os
+        
+        # Only download if file doesn't exist
+        if not os.path.exists('dr_model.weights.h5'):
+            file_id = "13rrhte8UAxSlOyEj8ae74n0LrrzeYaUJ"
+            url = f"https://drive.google.com/uc?id={file_id}"
+            with st.spinner("Downloading model weights..."):
+                gdown.download(url, 'dr_model.weights.h5', quiet=False)
+        
+        # Rebuild the model architecture
+        base_model = tf.keras.applications.EfficientNetB3(
+            weights='imagenet',
+            include_top=False,
+            input_shape=(224, 224, 3)
+        )
+        
+        # Add custom layers
+        model = tf.keras.Sequential([
+            base_model,
+            tf.keras.layers.GlobalAveragePooling2D(),
+            tf.keras.layers.Dropout(0.2),
+            tf.keras.layers.Dense(128, activation='relu'),
+            tf.keras.layers.Dropout(0.2),
+            tf.keras.layers.Dense(5, activation='softmax')
+        ])
+        
+        # Load the saved weights
+        model.load_weights('dr_model.weights.h5')
+        
+        return model
         return model
     except Exception as e:
         st.error(f"Error loading model: {str(e)}")
