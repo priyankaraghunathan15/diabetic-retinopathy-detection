@@ -28,11 +28,20 @@ CLASS_LABELS = {
 def load_model():
     """Load the trained model"""
     try:
-        model = tf.keras.models.load_model('diabetic_retinopathy_model.keras')
+        # Try different loading methods
+        model = tf.keras.models.load_model('diabetic_retinopathy_model.keras', compile=False)
         return model
     except Exception as e:
         st.error(f"Error loading model: {str(e)}")
-        return None
+        try:
+            # Alternative loading method
+            model = tf.keras.models.load_model('diabetic_retinopathy_model.keras', 
+                                             custom_objects=None, compile=False)
+            st.warning("Loaded model without compilation")
+            return model
+        except Exception as e2:
+            st.error(f"Second attempt failed: {str(e2)}")
+            return None
 
 def preprocess_image(image):
     """Preprocess image for model prediction"""
