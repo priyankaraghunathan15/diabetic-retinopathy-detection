@@ -1,8 +1,6 @@
 <h1 align="center">Diabetic Retinopathy Detection Using Deep Learning</h1>
 
 
-## Overview
-
 Diabetic Retinopathy (DR) is a leading cause of vision impairment worldwide, affecting millions of people with diabetes. Early detection is critical for preventing vision loss, but manual diagnosis requires specialized expertise and is time-consuming.
 
 This project presents an advanced deep learning solution leveraging **EfficientNet** and convolutional neural network, to classify retinal fundus images into five severity levels of DR. The model achieves strong performance through fine-tuning, focal loss for class imbalance, and comprehensive data augmentation, making it well-suited for real-world clinical applications.
