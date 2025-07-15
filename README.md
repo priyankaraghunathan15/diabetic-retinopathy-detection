@@ -7,7 +7,7 @@ Diabetic Retinopathy (DR) is a leading cause of vision impairment worldwide, aff
 This project presents an advanced deep learning solution leveraging **EfficientNet** and convolutional neural network, to classify retinal fundus images into five severity levels of DR. The model achieves strong performance through fine-tuning, focal loss for class imbalance, and comprehensive data augmentation, making it well-suited for real-world clinical applications.
 
 <p align="center">
-  <img src="images/main=picture.png" width="550"/>
+  <img src="images/main-picture.png"/>
 </p>
 ---
 
