@@ -109,6 +109,7 @@ python scripts/predict_and_visualize.py
 
 ## File Structure
 
+```
 ├── data/
 │   └── train.csv                           # Labels file
 │
@@ -135,7 +136,7 @@ python scripts/predict_and_visualize.py
 │
 ├── requirements.txt                      # Python dependencies
 └── README.md                             # Project documentation
-
+```
 ---
 
 ## Download Pretrained Artifacts
