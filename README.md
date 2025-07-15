@@ -54,15 +54,15 @@ The model is trained and validated on the publicly available [APTOS 2019 Blindne
 The following Grad-CAM heatmaps illustrate how the model focuses on key regions of retinal images when making predictions. This interpretability helps validate that the model attends to medically relevant features.
 
 <p align="center">
-  <img src="images/gradcam_sample1.png" alt="Grad-CAM Sample 1" width="400"/>
+  <img src="images/gradcam_sample1.png" alt="Grad-CAM Sample 1" width="900"/>
 </p>
 
 <p align="center">
-  <img src="images/gradcam_sample2.png" alt="Grad-CAM Sample 2" width="400"/>
+  <img src="images/gradcam_sample2.png" alt="Grad-CAM Sample 2" width="900"/>
 </p>
 
 <p align="center">
-  <img src="images/gradcam_sample3.png" alt="Grad-CAM Sample 3" width="400"/>
+  <img src="images/gradcam_sample3.png" alt="Grad-CAM Sample 3" width="900"/>
 </p>
 
 ---
