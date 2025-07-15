@@ -103,7 +103,7 @@ To generate predictions and Grad-CAM heatmaps on sample validation images:
 python scripts/predict_and_visualize.py
 ```
 
-> You can also load the pre-trained `.keras` or `.h5` model directly for testing.
+> You can also load the pre-trained `.keras` model directly for testing.
 
 ---
 
