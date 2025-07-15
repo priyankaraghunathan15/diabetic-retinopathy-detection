@@ -1,4 +1,4 @@
-# Diabetic Retinopathy Detection Using Deep Learning
+<h1 align="center">Diabetic Retinopathy Detection Using Deep Learning</h1>
 
 ## Overview
 
