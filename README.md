@@ -114,6 +114,7 @@ python scripts/predict_and_visualize.py
 │   └── train.csv                     # Labels file
 │
 ├── models/
+    ├── diabetic_retinopathy_model.keras     # Saved model (for deployment)
 │   ├── training_history.pkl                 # Pickled training metrics
 │   ├── sample_images.npy                    # Sample batch of validation images
 │   ├── sample_labels.npy                    # Corresponding sample labels
@@ -135,6 +136,7 @@ python scripts/predict_and_visualize.py
 
 ## Download Pretrained Artifacts
 
+- `diabetic_retinopathy_model.keras`
 - `training_history.pkl`
 - `sample_images.npy`
 - `sample_labels.npy`
