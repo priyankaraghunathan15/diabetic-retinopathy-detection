@@ -55,7 +55,13 @@ The following Grad-CAM heatmaps illustrate how the model focuses on key regions 
 
 <p align="center">
   <img src="images/gradcam_sample1.png" alt="Grad-CAM Sample 1" width="400"/>
+</p>
+
+<p align="center">
   <img src="images/gradcam_sample2.png" alt="Grad-CAM Sample 2" width="400"/>
+</p>
+
+<p align="center">
   <img src="images/gradcam_sample3.png" alt="Grad-CAM Sample 3" width="400"/>
 </p>
 
