@@ -10,7 +10,7 @@ This project presents an advanced deep learning solution leveraging **EfficientN
 </p>
 
 ---
-
+  
 ## Key Features
 
 - **Five-class classification:** No DR, Mild, Moderate, Severe, and Proliferative DR
@@ -114,8 +114,6 @@ python scripts/predict_and_visualize.py
 │   └── train.csv                     # Labels file
 │
 ├── models/
-│   ├── diabetic_retinopathy_model.keras     # Saved model (for deployment or Streamlit)
-│   ├── diabetic_retinopathy_model.h5        # Saved model (includes focal loss support)
 │   ├── training_history.pkl                 # Pickled training metrics
 │   ├── sample_images.npy                    # Sample batch of validation images
 │   ├── sample_labels.npy                    # Corresponding sample labels
@@ -137,10 +135,6 @@ python scripts/predict_and_visualize.py
 
 ## Download Pretrained Artifacts
 
-> If you're running this outside Kaggle, download these files and place them in the `models/` directory:
-
-- `diabetic_retinopathy_model.keras`
-- `diabetic_retinopathy_model.h5`
 - `training_history.pkl`
 - `sample_images.npy`
 - `sample_labels.npy`
