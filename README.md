@@ -51,48 +51,84 @@ The model is trained and validated on the publicly available [APTOS 2019 Blindne
 
 ## Installation & Usage
 
-1. Clone the repository:
+Clone the repository and navigate to the project directory:
 
-   ```bash
-   git clone <[your-repo-url](https://github.com/priyankaraghunathan15/diabetic-retinopathy-detection/tree/main)>
-   cd diabetic-retinopathy-detection
-   ```
+```bash
+git clone https://github.com/priyankaraghunathan15/diabetic-retinopathy-detection.git
+cd diabetic_retinopathy_detection
+```
 
-2. Install dependencies (recommended in a virtual environment):
+Install dependencies (recommended in a virtual environment):
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 
-3. Prepare dataset by placing retinal images in the `/train_images` directory.
+Prepare the dataset:
 
-4. Run training script:
+- Download and extract the **APTOS 2019 Blindness Detection** dataset
+- Ensure `train.csv` is available for label mapping
 
-   ```bash
-   python train_model.py
-   ```
+### Train the Model
 
-5. For inference and Grad-CAM visualization, use:
+Run the training pipeline (this uses EfficientNet and focal loss):
 
-   ```bash
-   python predict_and_visualize.py
-   ```
+```bash
+python scripts/train_model.py
+```
+
+### Run Inference and Visualize Attention (Grad-CAM)
+
+To generate predictions and Grad-CAM heatmaps on sample validation images:
+
+```bash
+python scripts/predict_and_visualize.py
+```
+
+> You can also load the pre-trained `.keras` or `.h5` model directly for testing.
 
 ---
 
 ## File Structure
 
 ```
-├── data/                   # Dataset directory (images, labels)
-├── models/                 # Saved models (.h5, .keras)
-├── notebooks/              # Jupyter notebooks for exploration & experimentation
+├── data/
+│   └── train.csv                     # Labels file
+│
+├── models/
+│   ├── diabetic_retinopathy_model.keras     # Saved model (for deployment or Streamlit)
+│   ├── diabetic_retinopathy_model.h5        # Saved model (includes focal loss support)
+│   ├── training_history.pkl                 # Pickled training metrics
+│   ├── sample_images.npy                    # Sample batch of validation images
+│   ├── sample_labels.npy                    # Corresponding sample labels
+│   └── focal_loss_function.py               # Custom focal loss implementation
+│
+├── notebooks/
+│   └── diabetic_retinopathy_exploration.ipynb  # EDA, training, metrics, Grad-CAM
+│
 ├── scripts/
-│   ├── train_model.py      # Training and evaluation pipeline
-│   ├── predict_and_visualize.py  # Prediction and Grad-CAM visualization
-│   └── focal_loss_function.py    # Custom focal loss code
-├── requirements.txt        # Python dependencies
-└── README.md
+│   ├── train_model.py              # Full training pipeline
+│   ├── predict_and_visualize.py   # Inference and Grad-CAM visualization
+│   └── focal_loss_function.py     # Custom loss (for import and reuse)
+│
+├── requirements.txt               # Python dependencies
+└── README.md                      # Project documentation
 ```
+
+---
+
+## Download Pretrained Artifacts
+
+> If you're running this outside Kaggle, download these files and place them in the `models/` directory:
+
+- `diabetic_retinopathy_model.keras`
+- `diabetic_retinopathy_model.h5`
+- `training_history.pkl`
+- `sample_images.npy`
+- `sample_labels.npy`
+- `focal_loss_function.py`
+
+These files are essential for testing, visualization, and deployment.
 
 ---
 
