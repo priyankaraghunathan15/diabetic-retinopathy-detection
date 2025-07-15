@@ -54,7 +54,7 @@ The model is trained and validated on the publicly available [APTOS 2019 Blindne
 1. Clone the repository:
 
    ```bash
-   git clone <your-repo-url>
+   git clone <[your-repo-url](https://github.com/priyankaraghunathan15/diabetic-retinopathy-detection/tree/main)>
    cd diabetic-retinopathy-detection
    ```
 
