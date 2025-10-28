@@ -103,7 +103,7 @@ To generate predictions and Grad-CAM heatmaps on sample validation images:
 python scripts/predict_and_visualize.py
 ```
 
-> You can also load the pre-trained `.keras` or `.h5` model directly for testing.
+> You can also load the pre-trained `.keras` model directly for testing.
 
 ---
 
@@ -111,30 +111,37 @@ python scripts/predict_and_visualize.py
 
 ```
 ├── data/
-│   └── train.csv                     # Labels file
+│   └── train.csv                           # Labels file
 │
 ├── models/
-│   ├── training_history.pkl                 # Pickled training metrics
-│   ├── sample_images.npy                    # Sample batch of validation images
-│   ├── sample_labels.npy                    # Corresponding sample labels
-│   └── focal_loss_function.py               # Custom focal loss implementation
+│   ├── diabetic_retinopathy_model.keras   # Saved model (for deployment)
+│   ├── training_history.pkl               # Pickled training metrics
+│   ├── sample_images.npy                  # Sample batch of validation images
+│   ├── sample_labels.npy                  # Corresponding sample labels
+│   └── focal_loss_function.py             # Custom focal loss implementation
 │
 ├── notebooks/
 │   └── diabetic_retinopathy_exploration.ipynb  # EDA, training, metrics, Grad-CAM
 │
 ├── scripts/
-│   ├── train_model.py              # Full training pipeline
-│   ├── predict_and_visualize.py   # Inference and Grad-CAM visualization
-│   └── focal_loss_function.py     # Custom loss (for import and reuse)
+│   ├── train_model.py                     # Full training pipeline
+│   ├── predict_and_visualize.py          # Inference and Grad-CAM visualization
+│   └── focal_loss_function.py            # Custom loss (for import and reuse)
 │
-├── requirements.txt               # Python dependencies
-└── README.md                      # Project documentation
+├── images/
+│   ├── main-picture.png                  # Overview image used in README
+│   ├── gradcam_sample1.png               # Grad-CAM visualization sample 1
+│   ├── gradcam_sample2.png               # Grad-CAM visualization sample 2
+│   ├── gradcam_sample3.png               # Grad-CAM visualization sample 3
+│
+├── requirements.txt                      # Python dependencies
+└── README.md                             # Project documentation
 ```
-
 ---
 
 ## Download Pretrained Artifacts
 
+- `diabetic_retinopathy_model.keras`
 - `training_history.pkl`
 - `sample_images.npy`
 - `sample_labels.npy`
