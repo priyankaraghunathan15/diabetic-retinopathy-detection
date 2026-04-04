@@ -61,15 +61,48 @@ AI_SUMMARIES = [
 
 model = keras.models.load_model('models/diabetic_retinopathy_model.keras')
 
+# Log model structure at startup to help diagnose Grad-CAM issues
+logging.info("Top-level model layers:")
+for i, l in enumerate(model.layers):
+    logging.info("  [%d] %s (%s)", i, l.name, type(l).__name__)
+    if hasattr(l, 'layers'):
+        conv_names = [sl.name for sl in l.layers if 'conv' in sl.name.lower()]
+        logging.info("      last 3 conv layers: %s", conv_names[-3:])
+
+
+def _find_last_conv(layers):
+    """Return the last Conv layer from a list, checking by type then name."""
+    for l in reversed(layers):
+        if isinstance(l, tf.keras.layers.Conv2D):
+            return l
+    for l in reversed(layers):
+        if 'conv' in l.name.lower():
+            return l
+    return None
+
 
 def make_gradcam(img_array, model):
     try:
-        efficientnet = model.layers[0]
-        last_conv = next(l for l in reversed(efficientnet.layers) if 'conv' in l.name.lower())
-        grad_model = tf.keras.Model(
-            inputs=efficientnet.inputs,
-            outputs=[last_conv.output, efficientnet.output]
-        )
+        # Find sub-model (e.g. EfficientNet) and last conv layer
+        sub_model = next((l for l in model.layers if hasattr(l, 'layers')), None)
+
+        if sub_model is not None:
+            last_conv = _find_last_conv(sub_model.layers)
+            grad_model = tf.keras.Model(
+                inputs=sub_model.inputs,
+                outputs=[last_conv.output, sub_model.output]
+            )
+        else:
+            # Flat model — search top-level layers
+            last_conv = _find_last_conv(model.layers)
+            grad_model = tf.keras.Model(
+                inputs=model.inputs,
+                outputs=[last_conv.output, model.output]
+            )
+
+        if last_conv is None:
+            logging.warning("Grad-CAM: no Conv2D layer found in model")
+            return None
         with tf.GradientTape() as tape:
             conv_out, predictions = grad_model(img_array, training=False)
             pred_class = tf.argmax(predictions[0])
