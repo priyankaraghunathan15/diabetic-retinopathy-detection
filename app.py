@@ -1,99 +1,30 @@
 import os
 os.environ['KERAS_BACKEND'] = 'tensorflow'
 
-import streamlit as st
 import numpy as np
 from PIL import Image
 import keras
+import gradio as gr
 
-# Page config
-st.set_page_config(
-    page_title="Diabetic Retinopathy Detection",
-    page_icon="👁️",
-    layout="centered"
-)
+CLASS_LABELS = ["No DR", "Mild DR", "Moderate DR", "Severe DR", "Proliferative DR"]
 
-# Title
-st.title("👁️ Diabetic Retinopathy Detection")
-st.write("Upload a retinal image to detect diabetic retinopathy severity")
+model = keras.models.load_model('models/diabetic_retinopathy_model.keras')
 
-# Class labels
-CLASS_LABELS = {
-    0: "No DR",
-    1: "Mild DR",
-    2: "Moderate DR",
-    3: "Severe DR",
-    4: "Proliferative DR"
-}
-
-@st.cache_resource
-def load_model():
-    return keras.models.load_model('models/diabetic_retinopathy_model.keras')
-
-def preprocess_image(image):
-    image = image.resize((224, 224))
-    if image.mode != 'RGB':
-        image = image.convert('RGB')
+def predict(image):
+    image = image.resize((224, 224)).convert('RGB')
     img_array = np.array(image).astype('float32') / 255.0
     img_array = np.expand_dims(img_array, axis=0)
-    return img_array
+    probs = model.predict(img_array, verbose=0)[0]
+    return {CLASS_LABELS[i]: float(probs[i]) for i in range(len(CLASS_LABELS))}
 
-def predict_image(model, image):
-    try:
-        prediction = model.predict(image, verbose=0)
-        predicted_class = np.argmax(prediction[0])
-        confidence = np.max(prediction[0])
-        return predicted_class, confidence, prediction[0]
-    except Exception as e:
-        st.error(f"Error making prediction: {str(e)}")
-        return None, None, None
+demo = gr.Interface(
+    fn=predict,
+    inputs=gr.Image(type="pil", label="Upload Retinal Image"),
+    outputs=gr.Label(num_top_classes=5, label="Severity Classification"),
+    title="👁️ Diabetic Retinopathy Detection",
+    description="Upload a retinal fundus image to classify diabetic retinopathy severity. Built on EfficientNetB3 trained on the APTOS 2019 dataset.",
+    examples=None,
+    flagging_mode="never"
+)
 
-# Load model
-model = load_model()
-
-if model is not None:
-    st.success("✅ Model loaded successfully!")
-
-    uploaded_file = st.file_uploader(
-        "Choose a retinal image...",
-        type=['png', 'jpg', 'jpeg'],
-        help="Upload a retinal fundus image"
-    )
-
-    if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        col1, col2 = st.columns(2)
-
-        with col1:
-            st.subheader("Original Image")
-            st.image(image, caption="Uploaded Image", use_container_width=True)
-
-        with col2:
-            st.subheader("Prediction Results")
-            with st.spinner("Analyzing image..."):
-                processed_image = preprocess_image(image)
-                predicted_class, confidence, probabilities = predict_image(model, processed_image)
-
-            if predicted_class is not None:
-                st.markdown(f"**Prediction:** {CLASS_LABELS[predicted_class]}")
-                st.markdown(f"**Confidence:** {confidence:.2%}")
-                st.progress(float(confidence))
-
-                st.subheader("Class Probabilities")
-                for i, prob in enumerate(probabilities):
-                    st.write(f"{CLASS_LABELS[i]}: {prob:.3f}")
-                    st.progress(float(prob))
-
-    else:
-        st.info("👆 Please upload a retinal image to get started")
-
-        st.markdown("""
-        ### Classes:
-        - **No DR**: No diabetic retinopathy
-        - **Mild DR**: Mild non-proliferative diabetic retinopathy
-        - **Moderate DR**: Moderate non-proliferative diabetic retinopathy
-        - **Severe DR**: Severe non-proliferative diabetic retinopathy
-        - **Proliferative DR**: Proliferative diabetic retinopathy
-        """)
-else:
-    st.error("❌ Failed to load model. Please refresh the page to try again.")
+demo.launch()

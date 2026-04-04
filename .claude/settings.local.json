@@ -16,7 +16,8 @@
       "Bash(/c/Users/Priyanka/diabetic-retinopathy-detection/venv/Scripts/pip.exe show:*)",
       "Bash(/c/Users/Priyanka/anaconda3/python.exe --version)",
       "Bash(/c/Users/Priyanka/anaconda3/python.exe -c \"import tensorflow as tf; print\\('TF:', tf.__version__\\)\")",
-      "Bash(/c/Users/Priyanka/anaconda3/python.exe:*)"
+      "Bash(/c/Users/Priyanka/anaconda3/python.exe:*)",
+      "Bash(ls -la D:/Documents/GitHub/diabetic-retinopathy-detection/.git*)"
     ]
   }
 }

@@ -1,5 +1,5 @@
-streamlit==1.28.1
-tensorflow==2.16.1
+gradio==4.44.0
+tensorflow-cpu==2.16.1
 keras==3.8.0
 pillow==10.0.1
 numpy==1.26.4
