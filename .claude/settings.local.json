@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed 's/\"source\":\"//')",
+      "Bash(sed 's/\"source\":\"\\\\s*//')",
+      "Bash(find:*)",
+      "Bash(python3:*)",
+      "Bash(python -c ':*)",
+      "Bash(python:*)",
+      "Bash(pip show:*)",
+      "Bash(pip list:*)",
+      "Bash(conda env:*)",
+      "Bash(where python:*)",
+      "Bash(C:/Users/Priyanka/AppData/Local/Programs/Python/Python310/python.exe:*)",
+      "Bash(/c/Users/Priyanka/diabetic-retinopathy-detection/venv/Scripts/python.exe:*)",
+      "Bash(/c/Users/Priyanka/diabetic-retinopathy-detection/venv/Scripts/pip.exe show:*)",
+      "Bash(/c/Users/Priyanka/anaconda3/python.exe --version)",
+      "Bash(/c/Users/Priyanka/anaconda3/python.exe -c \"import tensorflow as tf; print\\('TF:', tf.__version__\\)\")",
+      "Bash(/c/Users/Priyanka/anaconda3/python.exe:*)"
+    ]
+  }
+}

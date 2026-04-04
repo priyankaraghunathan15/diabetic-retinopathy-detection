@@ -1,12 +1,10 @@
+import os
+os.environ['KERAS_BACKEND'] = 'tensorflow'
+
 import streamlit as st
 import numpy as np
 from PIL import Image
-import gdown
-import os
-
-# Fix for TensorFlow 2.20+ — keras is now a separate package
 import keras
-from keras import layers, applications
 
 # Page config
 st.set_page_config(
@@ -29,41 +27,10 @@ CLASS_LABELS = {
 }
 
 @st.cache_resource
-def download_and_load_model():
-    """Download weights and load model"""
-    try:
-        # Download weights if not exists
-        if not os.path.exists('dr_model.weights.h5'):
-            file_id = "13rrhte8UAxSlOyEj8ae74n0LrrzeYaUJ"
-            url = f"https://drive.google.com/uc?id={file_id}"
-            st.info("Downloading model weights... This may take a moment.")
-            gdown.download(url, 'dr_model.weights.h5', quiet=False)
-
-        # Create model with exact architecture
-        inputs = keras.Input(shape=(224, 224, 3))
-        base_model = applications.EfficientNetB3(
-            include_top=False,
-            weights=None,
-            input_shape=(224, 224, 3)
-        )
-        x = base_model(inputs)
-        x = layers.GlobalAveragePooling2D()(x)
-        x = layers.Dropout(0.2)(x)
-        x = layers.Dense(128, activation='relu')(x)
-        x = layers.Dropout(0.2)(x)
-        outputs = layers.Dense(5, activation='softmax')(x)
-        model = keras.Model(inputs, outputs)
-
-        # Load weights
-        model.load_weights('dr_model.weights.h5')
-        return model
-
-    except Exception as e:
-        st.error(f"Error: {str(e)}")
-        return None
+def load_model():
+    return keras.models.load_model('models/diabetic_retinopathy_model.keras')
 
 def preprocess_image(image):
-    """Preprocess image for model prediction"""
     image = image.resize((224, 224))
     if image.mode != 'RGB':
         image = image.convert('RGB')
@@ -72,7 +39,6 @@ def preprocess_image(image):
     return img_array
 
 def predict_image(model, image):
-    """Make prediction on preprocessed image"""
     try:
         prediction = model.predict(image, verbose=0)
         predicted_class = np.argmax(prediction[0])
@@ -83,7 +49,7 @@ def predict_image(model, image):
         return None, None, None
 
 # Load model
-model = download_and_load_model()
+model = load_model()
 
 if model is not None:
     st.success("✅ Model loaded successfully!")
@@ -100,7 +66,7 @@ if model is not None:
 
         with col1:
             st.subheader("Original Image")
-            st.image(image, caption="Uploaded Image", use_column_width=True)
+            st.image(image, caption="Uploaded Image", use_container_width=True)
 
         with col2:
             st.subheader("Prediction Results")
