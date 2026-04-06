@@ -201,8 +201,8 @@ function Navbar() {
           width: 30, height: 30, borderRadius: 7,
           background: 'linear-gradient(135deg, #6366f1, #4338ca)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: '0.8rem', flexShrink: 0,
-        }}>👁️</div>
+          fontSize: '0.8rem', flexShrink: 0, fontWeight: 800, color: '#a5b4fc',
+        }}>RI</div>
         <span style={{ fontWeight: 800, fontSize: '0.9rem', letterSpacing: '-0.01em' }}>Retinal AI</span>
         <span style={{
           fontSize: '0.6rem', fontWeight: 600, color: '#a5b4fc',
@@ -335,7 +335,12 @@ function DataSection() {
         borderRadius: 14, padding: '20px 24px',
         display: 'flex', alignItems: 'flex-start', gap: 16, marginBottom: 44,
       }}>
-        <div style={{ fontSize: '1.3rem', flexShrink: 0, marginTop: 2 }}>⚠️</div>
+        <div style={{
+          width: 22, height: 22, borderRadius: 4, flexShrink: 0, marginTop: 2,
+          background: '#4338ca44', border: '1px solid #6366f155',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: '0.72rem', fontWeight: 900, color: '#a5b4fc',
+        }}>!</div>
         <div>
           <div style={{ fontWeight: 700, color: '#c7d2fe', marginBottom: 7, fontSize: '0.9rem' }}>
             The Real-World Problem Hidden in This Chart
@@ -500,7 +505,7 @@ function EvidenceSection() {
                     background: '#312e8122', border: '1px solid #6366f133',
                     color: '#a5b4fc', fontSize: '0.66rem', fontWeight: 600,
                     padding: '4px 10px', borderRadius: 20,
-                  }}>⚡ {channel}</div>
+                  }}>{channel}</div>
                 )}
               </div>
             ))}
@@ -617,9 +622,9 @@ function CommercialSection() {
           <CardLabel>Next-Best-Action Pipeline</CardLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             {[
-              { step: 'Patient Screened',        icon: '🔬', color: '#6366f1' },
-              { step: 'AI Classifies Severity',   icon: '🤖', color: '#818cf8' },
-              { step: 'Risk Tier Assigned',        icon: '⚖️', color: '#a5b4fc' },
+              { step: 'Patient Screened',        icon: '01', color: '#6366f1' },
+              { step: 'AI Classifies Severity',   icon: '02', color: '#818cf8' },
+              { step: 'Risk Tier Assigned',        icon: '03', color: '#a5b4fc' },
             ].map(({ step, icon, color }, i) => (
               <div key={step}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -642,15 +647,18 @@ function CommercialSection() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginTop: 16 }}>
             {[
-              { tier: 'MONITOR', icon: '📱', color: '#10b981', ch: 'Digital' },
-              { tier: 'ENGAGE',  icon: '📋', color: '#f59e0b', ch: 'CRM Flag' },
-              { tier: 'ACT NOW', icon: '🤝', color: '#ef4444', ch: 'Field Rep' },
+              { tier: 'MONITOR', icon: 'D', color: '#10b981', ch: 'Digital' },
+              { tier: 'ENGAGE',  icon: 'C', color: '#f59e0b', ch: 'CRM Flag' },
+              { tier: 'ACT NOW', icon: 'F', color: '#ef4444', ch: 'Field Rep' },
             ].map(({ tier, icon, color, ch }) => (
               <div key={tier} style={{
                 background: color + '12', border: `1px solid ${color}33`,
                 borderRadius: 9, padding: '12px 8px', textAlign: 'center',
               }}>
-                <div style={{ fontSize: '1.1rem', marginBottom: 5 }}>{icon}</div>
+                <div style={{
+                  fontSize: '0.75rem', fontWeight: 900, marginBottom: 5,
+                  color: color, letterSpacing: '0.05em',
+                }}>{icon}</div>
                 <div style={{ fontSize: '0.58rem', fontWeight: 800, color, letterSpacing: '0.05em', marginBottom: 2 }}>{tier}</div>
                 <div style={{ fontSize: '0.6rem', color: T.muted }}>{ch}</div>
               </div>
