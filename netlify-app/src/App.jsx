@@ -84,11 +84,11 @@ const SAMPLES = [
 ]
 
 const TOP_STATES = [
-  { state: 'Texas',      patients: '3.2M', pct: 13.2, bar: 100 },
-  { state: 'Florida',    patients: '2.4M', pct: 12.8, bar: 97  },
-  { state: 'Georgia',    patients: '1.1M', pct: 12.4, bar: 94  },
-  { state: 'California', patients: '3.0M', pct: 10.5, bar: 80  },
-  { state: 'New York',   patients: '1.8M', pct: 10.3, bar: 78  },
+  { state: 'California', patients: '3.0M', pct: 10.0, bar: 100 },
+  { state: 'Texas',      patients: '2.8M', pct: 12.3, bar: 91  },
+  { state: 'Florida',    patients: '2.1M', pct: 11.6, bar: 68  },
+  { state: 'New York',   patients: '1.7M', pct: 9.3,  bar: 55  },
+  { state: 'Georgia',    patients: '1.1M', pct: 11.4, bar: 36  },
 ]
 
 /* ── TOKENS ────────────────────────────────────────────────────────── */
@@ -251,7 +251,7 @@ function Hero() {
         fontWeight: 900, letterSpacing: '-0.04em',
         lineHeight: 1.08, maxWidth: 860, marginBottom: 32,
       }}>
-        422 million people<br />
+        589 million people<br />
         <span style={{ color: T.accent2 }}>live with diabetes.</span>
       </h1>
 
@@ -374,7 +374,7 @@ function DataSection() {
 /* ── SECTION 3+4: AI EVIDENCE ──────────────────────────────────────── */
 
 function EvidenceSection() {
-  const [active, setActive] = useState(2) // Default to Proliferative (most dramatic)
+  const [active, setActive] = useState(4) // Default to Proliferative DR (index 4, most dramatic)
   const s = SAMPLES[active]
 
   return (
@@ -590,11 +590,12 @@ function CommercialSection() {
               Top 5 States by Diabetic Population
             </div>
           </div>
-          <div style={{
+          <a href="https://diabetes.org/about-diabetes/statistics/by-state" target="_blank" rel="noreferrer" style={{
             background: '#4338ca22', border: '1px solid #6366f133',
             color: '#a5b4fc', fontSize: '0.6rem', fontWeight: 600,
             padding: '4px 12px', borderRadius: 20, flexShrink: 0,
-          }}>Source: CDC National Diabetes Statistics</div>
+            textDecoration: 'none',
+          }}>Source: ADA 2023 State Fact Sheets</a>
         </div>
         {TOP_STATES.map(({ state, patients, pct, bar }) => (
           <div key={state} style={{ marginBottom: 16 }}>
@@ -645,7 +646,23 @@ function CommercialSection() {
               </div>
             ))}
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginTop: 16 }}>
+          {/* Connector from step 3 → tier boxes */}
+          <div style={{ margin: '4px 0 6px' }}>
+            {/* Vertical stem from step 3 icon */}
+            <div style={{ width: 1, height: 12, background: T.border, marginLeft: 18 }} />
+            {/* Horizontal branch spanning all three columns */}
+            <div style={{ height: 1, background: T.border }} />
+            {/* Three colored drops to tier boxes */}
+            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+              {['#10b981', '#f59e0b', '#ef4444'].map((color, i) => (
+                <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+                  <div style={{ width: 1, height: 10, background: color + '88' }} />
+                  <div style={{ width: 6, height: 6, borderRadius: '50%', background: color }} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, marginTop: 4 }}>
             {[
               { tier: 'MONITOR', icon: 'D', color: '#10b981', ch: 'Digital' },
               { tier: 'ENGAGE',  icon: 'C', color: '#f59e0b', ch: 'CRM Flag' },
@@ -679,13 +696,13 @@ function CommercialSection() {
             <div style={{
               fontSize: 'clamp(2.4rem, 5vw, 3.4rem)', fontWeight: 900,
               color: '#a5b4fc', letterSpacing: '-0.04em', lineHeight: 1, marginBottom: 8,
-            }}>70,000</div>
+            }}>67,000</div>
             <div style={{ fontSize: '0.88rem', color: '#c7d2fe', marginBottom: 18, lineHeight: 1.5 }}>
               high-risk patients per 500,000 screened
             </div>
             <div style={{ fontSize: '0.8rem', color: T.muted, lineHeight: 1.72 }}>
               In a US health system managing 500,000 diabetic patients, this model identifies
-              ~70,000 individuals requiring immediate intervention — a significant addressable
+              ~67,000 individuals requiring immediate intervention — a significant addressable
               population for retinal therapy and anti-VEGF treatment brands.
             </div>
           </div>
@@ -694,7 +711,7 @@ function CommercialSection() {
             background: '#6366f114', border: '1px solid #6366f130',
             borderRadius: 10, fontSize: '0.7rem', color: '#818cf8', lineHeight: 1.6,
           }}>
-            Illustrative · Based on APTOS 2019 class distribution applied to US CDC prevalence data
+            Illustrative · 13.4% ACT NOW rate from APTOS 2019 applied to 500,000 patients · ADA/CDC prevalence data
           </div>
         </div>
       </div>

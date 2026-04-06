@@ -25,7 +25,8 @@
       "Bash(cp D:/Documents/GitHub/diabetic-retinopathy-detection/images/gradcam_sample1.png D:/Documents/GitHub/diabetic-retinopathy-detection/netlify-app/public/images/)",
       "Bash(cp D:/Documents/GitHub/diabetic-retinopathy-detection/images/gradcam_sample2.png D:/Documents/GitHub/diabetic-retinopathy-detection/netlify-app/public/images/)",
       "Bash(cp D:/Documents/GitHub/diabetic-retinopathy-detection/images/gradcam_sample3.png D:/Documents/GitHub/diabetic-retinopathy-detection/netlify-app/public/images/)",
-      "Bash(pip install:*)"
+      "Bash(pip install:*)",
+      "WebSearch"
     ]
   }
 }
