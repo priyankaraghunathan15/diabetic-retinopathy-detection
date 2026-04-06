@@ -1,0 +1,4 @@
+[build]
+  base    = "netlify-app"
+  command = "npm run build"
+  publish = "dist"

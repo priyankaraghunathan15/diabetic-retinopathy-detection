@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Retinal AI | Clinical Intelligence Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body { background: #080b12; color: #eef0f8; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: #080b12; }
+      ::-webkit-scrollbar-thumb { background: #242d4a; border-radius: 3px; }
+      @media (max-width: 640px) {
+        .two-col { grid-template-columns: 1fr !important; }
+        .four-col { grid-template-columns: 1fr 1fr !important; }
+        .three-col { grid-template-columns: 1fr !important; }
+        .hero-stats { grid-template-columns: 1fr !important; }
+        .nav-links { display: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

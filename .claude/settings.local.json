@@ -17,7 +17,10 @@
       "Bash(/c/Users/Priyanka/anaconda3/python.exe --version)",
       "Bash(/c/Users/Priyanka/anaconda3/python.exe -c \"import tensorflow as tf; print\\('TF:', tf.__version__\\)\")",
       "Bash(/c/Users/Priyanka/anaconda3/python.exe:*)",
-      "Bash(ls -la D:/Documents/GitHub/diabetic-retinopathy-detection/.git*)"
+      "Bash(ls -la D:/Documents/GitHub/diabetic-retinopathy-detection/.git*)",
+      "Bash(cd /tmp)",
+      "Read(//tmp/**)",
+      "Bash(ls -la /tmp/cell_*.txt)"
     ]
   }
 }
