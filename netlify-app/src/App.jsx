@@ -281,7 +281,7 @@ function Hero() {
         fontSize: 'clamp(0.95rem, 2.5vw, 1.2rem)',
         color: T.muted, maxWidth: 600, lineHeight: 1.75, marginBottom: 44,
       }}>
-        We built an AI system that detects diabetic retinopathy from retinal scans —
+        I built an AI system that detects diabetic retinopathy from retinal scans —
         and turns clinical findings into{' '}
         <span style={{ color: T.text, fontWeight: 600 }}>commercial-ready patient intelligence.</span>
       </p>
