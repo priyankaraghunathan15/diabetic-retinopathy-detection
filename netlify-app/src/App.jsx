@@ -346,10 +346,9 @@ function DataSection() {
             The Real-World Problem Hidden in This Chart
           </div>
           <div style={{ fontSize: '0.84rem', color: '#a5b4fc', lineHeight: 1.72 }}>
-            Severe and Proliferative cases — the ones that cause blindness — make up only{' '}
-            <strong>13.4% of patients.</strong> A standard model optimising for overall accuracy
-            learns to ignore them. This system was specifically designed to{' '}
-            <strong>prioritise finding the highest-risk patients.</strong>
+          Severe and Proliferative cases make up only{' '} <strong>13.4% of patients.</strong>{' '} These are the ones 
+          that cause blindness. A standard model optimising for overall accuracy learns to ignore them. This system was 
+          specifically designed to{' '} <strong>prioritise finding the highest-risk patients.</strong>
           </div>
         </div>
       </div>
