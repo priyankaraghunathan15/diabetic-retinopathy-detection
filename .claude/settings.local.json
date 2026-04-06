@@ -20,7 +20,12 @@
       "Bash(ls -la D:/Documents/GitHub/diabetic-retinopathy-detection/.git*)",
       "Bash(cd /tmp)",
       "Read(//tmp/**)",
-      "Bash(ls -la /tmp/cell_*.txt)"
+      "Bash(ls -la /tmp/cell_*.txt)",
+      "Bash(mkdir -p D:/Documents/GitHub/diabetic-retinopathy-detection/netlify-app/public/images)",
+      "Bash(cp D:/Documents/GitHub/diabetic-retinopathy-detection/images/gradcam_sample1.png D:/Documents/GitHub/diabetic-retinopathy-detection/netlify-app/public/images/)",
+      "Bash(cp D:/Documents/GitHub/diabetic-retinopathy-detection/images/gradcam_sample2.png D:/Documents/GitHub/diabetic-retinopathy-detection/netlify-app/public/images/)",
+      "Bash(cp D:/Documents/GitHub/diabetic-retinopathy-detection/images/gradcam_sample3.png D:/Documents/GitHub/diabetic-retinopathy-detection/netlify-app/public/images/)",
+      "Bash(pip install:*)"
     ]
   }
 }
