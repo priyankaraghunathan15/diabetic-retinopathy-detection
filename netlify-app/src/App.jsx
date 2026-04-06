@@ -312,9 +312,9 @@ function DataSection() {
         fontSize: '0.92rem', color: T.muted,
         lineHeight: 1.75, maxWidth: 680, marginBottom: 52,
       }}>
-        The APTOS 2019 dataset mirrors the real world perfectly — most patients are healthy.
+        The APTOS 2019 dataset mirrors the real world perfectly, most patients are healthy.
         But the patients who need urgent intervention are the minority.
-        A standard AI model would learn to ignore them.
+        A standard model would learn to ignore them.
       </p>
 
       <div style={{ height: 320, marginBottom: 36 }}>
