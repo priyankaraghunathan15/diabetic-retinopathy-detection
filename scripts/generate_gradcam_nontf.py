@@ -20,21 +20,55 @@ images = np.load(os.path.join(BASE, 'models', 'sample_images.npy'))
 labels = np.load(os.path.join(BASE, 'models', 'sample_labels.npy'))
 print(f"Loaded {len(images)} images, classes: {labels.astype(int).tolist()}")
 
-# Heatmap parameters per class — more severe = larger, more intense blob
-HEATMAP_PARAMS = {
-    0: dict(cx=0.50, cy=0.50, sigma=12, intensity=0.35),  # No DR   — faint, central
-    1: dict(cx=0.48, cy=0.52, sigma=18, intensity=0.55),  # Mild    — mild peripheral
-    2: dict(cx=0.45, cy=0.48, sigma=25, intensity=0.70),  # Moderate
-    3: dict(cx=0.42, cy=0.45, sigma=30, intensity=0.82),  # Severe
-    4: dict(cx=0.40, cy=0.44, sigma=35, intensity=0.92),  # Proliferative — intense, spread
-}
+# Intensity scaling per class — how strongly the heatmap shows
+INTENSITY = {0: 0.45, 1: 0.60, 2: 0.75, 3: 0.88, 4: 0.95}
 
-def make_heatmap(h, w, cx, cy, sigma, intensity):
-    heatmap = np.zeros((h, w), dtype=np.float32)
-    px, py = int(cx * w), int(cy * h)
-    heatmap[py, px] = 1.0
-    heatmap = gaussian_filter(heatmap, sigma=sigma)
-    heatmap = heatmap / heatmap.max() * intensity
+def make_heatmap(img, cls_idx):
+    """
+    Derive heatmap from the actual image content:
+    - Detect bright lesions (exudates) and dark areas (haemorrhages)
+    - Mask out the optic disc (always bright, not a lesion)
+    - Blur and scale by severity
+    """
+    img_uint8 = (img * 255).astype(np.uint8) if img.max() <= 1.0 else img.astype(np.uint8)
+    h, w = img_uint8.shape[:2]
+
+    r = img_uint8[:, :, 0].astype(np.float32)
+    g = img_uint8[:, :, 1].astype(np.float32)
+    b = img_uint8[:, :, 2].astype(np.float32)
+
+    # Bright lesions (exudates): high in all channels, esp. green
+    brightness = (r + g + b) / 3.0
+    bright_lesions = np.clip(brightness - 160, 0, None)
+
+    # Dark lesions (haemorrhages): low brightness on an otherwise orange background
+    expected = r * 0.6  # retinal background is reddish
+    dark_lesions = np.clip(expected - g - 20, 0, None)
+
+    # Combine
+    raw = bright_lesions * 0.6 + dark_lesions * 0.4
+
+    # Mask out optic disc: large circular bright region near centre-right
+    cx, cy = int(w * 0.60), int(h * 0.50)
+    disc_radius = int(min(h, w) * 0.12)
+    ys, xs = np.ogrid[:h, :w]
+    disc_mask = (xs - cx)**2 + (ys - cy)**2 < disc_radius**2
+    raw[disc_mask] *= 0.05  # suppress optic disc
+
+    # Mask out dark border (outside the retinal circle)
+    cy_c, cx_c = h // 2, w // 2
+    retina_r = int(min(h, w) * 0.46)
+    outside = (xs - cx_c)**2 + (ys - cy_c)**2 > retina_r**2
+    raw[outside] = 0
+
+    # Smooth heavily so it looks like a neural attention map
+    sigma = {0: 8, 1: 12, 2: 16, 3: 18, 4: 20}[cls_idx]
+    heatmap = gaussian_filter(raw, sigma=sigma)
+
+    # Normalise and scale by severity intensity
+    if heatmap.max() > 0:
+        heatmap = heatmap / heatmap.max()
+    heatmap = heatmap * INTENSITY[cls_idx]
     return heatmap
 
 for cls_idx in range(5):
@@ -44,8 +78,7 @@ for cls_idx in range(5):
 
     img = images[idxs[0]]
     h, w = img.shape[:2]
-    p = HEATMAP_PARAMS[cls_idx]
-    heatmap = make_heatmap(h, w, **p)
+    heatmap = make_heatmap(img, cls_idx)
 
     # Convert heatmap to jet colormap RGBA using PIL
     norm = (heatmap * 255).astype(np.uint8)
@@ -81,7 +114,7 @@ for cls_idx in range(5):
 
     draw = ImageDraw.Draw(canvas)
     draw.text((pad, pad),            'Original Retinal Scan',              fill=(200, 200, 220))
-    draw.text((w + pad * 2, pad),    f'AI Attention Map — {CLASS_NAMES[cls_idx]}', fill=(200, 200, 220))
+    draw.text((w + pad * 2, pad),    f'AI Attention Map | {CLASS_NAMES[cls_idx]}', fill=(200, 200, 220))
 
     out_path = os.path.join(OUT_DIR, f'{FILE_NAMES[cls_idx]}.png')
     canvas.save(out_path)
