@@ -281,7 +281,7 @@ function Hero() {
         fontSize: 'clamp(0.95rem, 2.5vw, 1.2rem)',
         color: T.muted, maxWidth: 600, lineHeight: 1.75, marginBottom: 44,
       }}>
-        I built an AI system that detects diabetic retinopathy from retinal scans —
+        I built an AI system that detects diabetic retinopathy from retinal scans 
         and turns clinical findings into{' '}
         <span style={{ color: T.text, fontWeight: 600 }}>commercial-ready patient intelligence.</span>
       </p>
@@ -388,9 +388,8 @@ function EvidenceSection() {
           fontSize: '0.92rem', color: T.muted,
           lineHeight: 1.75, maxWidth: 700, marginBottom: 44,
         }}>
-          The Grad-CAM heatmap shows exactly which part of the retina the AI focused on.
-          The clinical intelligence layer converts that finding into an action plan —
-          no data science background needed.
+          The Grad-CAM heatmap shows exactly which part of the retina the model focused on.
+          The clinical intelligence layer converts that finding into an action plan.
         </p>
 
         {/* Sample tabs */}
@@ -527,7 +526,7 @@ function CommercialSection() {
         lineHeight: 1.75, maxWidth: 700, marginBottom: 56,
       }}>
         In a simulated population of 10,000 diabetic patients screened, the system automatically
-        segments each patient into an actionable risk tier — routing them to the right commercial channel.
+        segments each patient into an actionable risk tier, routing them to the right commercial channel.
       </p>
 
       {/* Risk segmentation + NBA */}
@@ -701,7 +700,7 @@ function CommercialSection() {
             </div>
             <div style={{ fontSize: '0.8rem', color: T.muted, lineHeight: 1.72 }}>
               In a US health system managing 500,000 diabetic patients, this model identifies
-              ~67,000 individuals requiring immediate intervention — a significant addressable
+              ~67,000 individuals requiring immediate intervention. A significant addressable
               population for retinal therapy and anti-VEGF treatment brands.
             </div>
           </div>
@@ -740,8 +739,8 @@ function About() {
           maxWidth: 620, margin: '0 auto 48px',
         }}>
           "At its core, this is about connecting the right therapy to the right patient
-          at the right time — identifying who needs intervention, routing them to the right
-          channel, and giving the commercial team the intelligence to act."
+          at the right time, identifying who needs intervention, routing them to the right
+          channel and giving the commercial team the intelligence to act."
         </blockquote>
 
         <div style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 44 }}>
